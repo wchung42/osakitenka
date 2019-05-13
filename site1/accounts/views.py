@@ -54,7 +54,6 @@ def edit_profile(request):
 			}
 		return render(request, 'accounts/edit_profile.html', args)
 
-
 def change_password(request):
 	if request.method == 'POST':
 		form = PasswordChangeForm(data=request.POST, user=request.user)
@@ -125,6 +124,18 @@ def submit_item(request):
 			'form1': form1,
 		}
 		return render(request, 'accounts/submit_item.html', args)
+
+def view_item(request, pk=None):
+	if pk:
+		item = Products.objects.get(pk=pk)
+		img = ProductsImage.objects.filter(product=item)
+	else:
+		return redirect('home')
+	args = {
+		'item': item,
+		'img': img,
+		}
+	return render(request, 'accounts/view_item.html', args)
 
 class friend_message(TemplateView):
 	template_name = 'accounts/message.html'

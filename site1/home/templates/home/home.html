@@ -25,7 +25,9 @@
 			{% for itm in items %}
 				{% for itmimg in itemimg %}
 				{% if itmimg.product == itm %}
-					<div><img src="{{ itmimg.image.url }}" width="200"></div>
+					<a href="{% url 'view_item' pk=itm.id %}">
+						<div><img src="{{ itmimg.image.url }}" width="200"></div>
+					</a>
 				{% endif %}
 				{% endfor %}
 				<p>Title: {{ itm.title }} </p>

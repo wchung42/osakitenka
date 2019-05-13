@@ -33,5 +33,6 @@ urlpatterns = [
 	path('search-user/', views.search_user, name='search_user'),
 	path('notification/', NotifyView.as_view(), name='notify'),
 	url(r'^message/(?P<pk>\d+)/$', friend_message.as_view(), name='friend_message'),
-	path('submit-item/', views.submit_item, name='submit_item')
+	path('submit-item/', views.submit_item, name='submit_item'),
+	url(r'^item/(?P<pk>\d+)/$', views.view_item, name='view_item'),
 ]
