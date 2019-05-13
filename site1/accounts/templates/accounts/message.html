@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+<h1>Home</h1>
+{% block head %}
+<title>OsakiTenka</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<h1>Message</h1>
+	{% if user.is_authenticated %}
+		{% for mess in mes %}
+			<h1>{{ mess.message }}</h1>
+			<p>Posted by {{ mess.current_user.username }} on {{ mess.created_date }}</p>
+		{% endfor %}
+		<form method="post">
+		{% csrf_token%}
+		{{ form.post }}
+		<br>
+		<button type="submit">Send</button>
+		</form>
+	{% endif %}
+</div>
+{% endblock %}

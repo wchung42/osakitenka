@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+<h1>Home</h1>
+
+{% block body %}
+	<audio controls loop autoplay="{{ audio.audio_file.url }}">
+    		<source src="{{ audio.audio_file.url }}" type="audio/mp3">
+	</audio>
+<div class="container">
+	<div class="col-md-8">
+		<h1>Homepage</h1>
+			{% if user.is_authenticated %}
+			<form method="post">
+			{% csrf_token%}
+			{{ form.post }}
+			<br>
+			<button type="submit">Submit</button>
+			</form>
+			{% endif %}
+			{% for post in posts %}
+				<h1>{{ post.post }}</h1>
+				<p>Posted by {{ post.user.username }} on {{ post.created_date }}</p>
+			{% endfor %}
+			<h1>Popular Items</h1>
+			{% for itm in items %}
+				{% for itmimg in itemimg %}
+				{% if itmimg.product == itm %}
+					<div><img src="{{ itmimg.image.url }}" width="200"></div>
+				{% endif %}
+				{% endfor %}
+				<p>Title: {{ itm.title }} </p>
+				<p>Description: {{ itm.description }}</p>
+				<p>Price: ${{ itm.price }}</p>
+			{% endfor %}
+			<h1>New Items</h1>
+	</div>
+</div>
+{% endblock %}
