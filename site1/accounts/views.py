@@ -139,6 +139,21 @@ def view_item(request, pk=None):
 		}
 	return render(request, 'accounts/view_item.html', args)
 
+def search_item(request):
+		item = Products.objects.all()
+		img = ProductsImage.objects.all()
+		if request.method == 'POST':
+			text = request.POST.get('textfield', None)
+			try:
+				item = item.filter(title__icontains= text).order_by('-num_purchased', '-num_viewed')
+			except:
+				return redirect('search_item')
+		args = {
+			'item': item,
+			'img': img,
+			}
+		return render(request, 'accounts/search_item.html', args)
+
 class friend_message(TemplateView):
 	template_name = 'accounts/message.html'
 

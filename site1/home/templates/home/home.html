@@ -9,18 +9,9 @@
 <div class="container">
 	<div class="col-md-8">
 		<h1>Homepage</h1>
-			{% if user.is_authenticated %}
-			<form method="post">
-			{% csrf_token%}
-			{{ form.post }}
-			<br>
-			<button type="submit">Submit</button>
-			</form>
-			{% endif %}
-			{% for post in posts %}
-				<h1>{{ post.post }}</h1>
-				<p>Posted by {{ post.user.username }} on {{ post.created_date }}</p>
-			{% endfor %}
+			<a href= "{% url 'search_item' %}">
+				<h1>Click Here To Search For Item</h1>
+			</a>
 			<h1>Popular Items</h1>
 			{% for itm in items %}
 				{% for itmimg in itemimg %}

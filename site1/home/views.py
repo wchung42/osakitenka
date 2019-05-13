@@ -25,7 +25,7 @@ class HomeView(TemplateView):
 			'itemimg': itemimg,
 		}
 		return render(request, self.template_name, args)
-		
+	#no need since post is just for testing to display on homepage
 	def post(self, request):
 		form = HomeForm(request.POST)
 		if form.is_valid():
