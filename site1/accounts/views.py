@@ -137,7 +137,7 @@ class friend_message(TemplateView):
 			mes0 = mes.filter(current_user=request.user, friend_user=friend_user)
 			mes1 = mes.filter(current_user=friend_user, friend_user=request.user)
 			mes2 = mes0 | mes1
-			mes3 = mes2.all().order_by('-created_date', '-updated_date')
+			mes = mes2.all().order_by('-created_date', '-updated_date')
 		else:
 			return redirect('home')
 		args = {
