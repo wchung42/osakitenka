@@ -128,6 +128,8 @@ def submit_item(request):
 def view_item(request, pk=None):
 	if pk:
 		item = Products.objects.get(pk=pk)
+		item.num_viewed += 1
+		item.save()
 		img = ProductsImage.objects.filter(product=item)
 	else:
 		return redirect('home')

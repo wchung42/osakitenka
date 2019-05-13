@@ -13,13 +13,15 @@ class HomeView(TemplateView):
 		form = HomeForm()
 		posts = Post.objects.all().order_by('-created_date', '-updated_date')
 		audio = Audio.objects.get(pk=3)
-		items = Products.objects.all().order_by('num_purchased', 'num_viewed')
+		items = Products.objects.all().order_by('-num_purchased', '-num_viewed')[:5]
+		newitems = Products.objects.all().order_by('-created_date', '-updated_date')[:5]
 		itemimg = ProductsImage.objects.all()
 		args = {
 			'form': form, 
 			'posts': posts,
 			'audio': audio,
 			'items': items,
+			'newitems': newitems,
 			'itemimg': itemimg,
 		}
 		return render(request, self.template_name, args)
