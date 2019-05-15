@@ -9,7 +9,7 @@ from django.contrib.auth.views import (
 	PasswordResetConfirmView,
 	PasswordResetCompleteView,
 	)
-from accounts.views import NotifyView, friend_message, submit_item
+from accounts.views import NotifyView, friend_message
 
 urlpatterns = [
 	path('login/', LoginView.as_view(template_name= 'accounts/login.html'), name='login'),
@@ -33,7 +33,5 @@ urlpatterns = [
 	path('search-user/', views.search_user, name='search_user'),
 	path('notification/', NotifyView.as_view(), name='notify'),
 	url(r'^message/(?P<pk>\d+)/$', friend_message.as_view(), name='friend_message'),
-	path('submit-item/', views.submit_item, name='submit_item'),
-	url(r'^item/(?P<pk>\d+)/$', views.view_item, name='view_item'),
-	path('search-item/', views.search_item, name='search_item'),
+	
 ]

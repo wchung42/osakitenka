@@ -5,8 +5,8 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
-from accounts.forms import RegistrationForm, EditProfileForm, ProfileForm, SearchUser, SendMessage, fProducts, fProductsImage
-from accounts.models import UserProfile, UserProfiles, Messages, Products, ProductsImage
+from accounts.forms import RegistrationForm, EditProfileForm, ProfileForm, SearchUser, SendMessage
+from accounts.models import UserProfile, UserProfiles, Messages
 from home.models import Friend, Friend_Request
 
 # Create your views here.
@@ -99,60 +99,6 @@ def search_user(request):
 			'frequest': frequest,
 			}
 		return render(request, 'accounts/search_user.html', args)
-
-def submit_item(request):
-	if request.method == 'POST':
-		form0 = fProducts(request.POST)
-		form1 = fProductsImage(request.POST, request.FILES)
-		if form0.is_valid() and form1.is_valid():
-			item_form = form0.save(commit=False)
-			image_form = form1.save(commit=False)
-			item_form.seller = request.user
-			item_form.save()
-			image_form.product = item_form
-			image_form.save()
-			form0 = fProducts()
-			form1 = fProductsImage()
-			return redirect('home')
-		else:
-			return redirect('submit_item')
-	else:
-		form0 = fProducts()
-		form1 = fProductsImage()
-		args = {
-			'form0': form0,
-			'form1': form1,
-		}
-		return render(request, 'accounts/submit_item.html', args)
-
-def view_item(request, pk=None):
-	if pk:
-		item = Products.objects.get(pk=pk)
-		item.num_viewed += 1
-		item.save()
-		img = ProductsImage.objects.filter(product=item)
-	else:
-		return redirect('home')
-	args = {
-		'item': item,
-		'img': img,
-		}
-	return render(request, 'accounts/view_item.html', args)
-
-def search_item(request):
-		item = Products.objects.all()
-		img = ProductsImage.objects.all()
-		if request.method == 'POST':
-			text = request.POST.get('textfield', None)
-			try:
-				item = item.filter(title__icontains= text).order_by('-num_purchased', '-num_viewed')
-			except:
-				return redirect('search_item')
-		args = {
-			'item': item,
-			'img': img,
-			}
-		return render(request, 'accounts/search_item.html', args)
 
 class friend_message(TemplateView):
 	template_name = 'accounts/message.html'
