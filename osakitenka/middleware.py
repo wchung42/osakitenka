@@ -31,9 +31,9 @@ class LoginRequiredMiddleware:
 			print("2")
 			return None
 		
-		elif not request.user.is_authenticated or not url_is_exempt:
-			print("3")
-			return redirect(settings.LOGIN_URL)
+		#elif not request.user.is_authenticated or not url_is_exempt:
+		#	print("3")
+		#	return redirect(settings.LOGIN_URL)
 		else:
 			print("4")
 			return request.GET.get(path)

@@ -86,7 +86,8 @@ def search_item(request):
 
 def item_list(request):
 	context = {
-		'items': Product.objects.all()
+		'items': Product.objects.all(),
+		'itemimg': ProductsImage.objects.all(),
 	}
 	return render(request, 'products/item_list.html', context)
 

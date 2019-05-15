@@ -4,8 +4,17 @@
 
 {% block body %}
 
-{% for item in items %}
-	{{ item.title }}
+{% for itm in items %}
+	{% for itmimg in itemimg %}
+		{% if itmimg.product == itm %}
+			<a href="{% url 'view_item' pk=itm.id %}">
+				<div><img src="{{ itmimg.image.url }}" width="200"></div>
+			</a>
+		{% endif %}
+	{% endfor %}
+		<p>Title: {{ itm.title }} </p>
+		<p>Description: {{ itm.description }}</p>
+		<p>Price: ${{ itm.price }}</p>
 {% endfor %}
 
 {% endblock %}
