@@ -7,14 +7,12 @@
 {% block body %}
 <div class="container">
 	<h1>Search Item</h1>
-	{% if user.is_authenticated %}
-		<form method="post">
-		{% csrf_token%}
-		<input type="text" name="textfield">
-		<br>
-		<button type="submit">Search</button>
-		</form>
-	{% endif %}
+	<form method="post">
+	{% csrf_token%}
+	<input type="text" name="textfield">
+	<br>
+	<button type="submit">Search</button>
+	</form>
 	<h2>Items</h2>
 		{% for itm in item %}
 			{% for itmimg in img %}

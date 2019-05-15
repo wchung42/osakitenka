@@ -140,5 +140,10 @@ LOGIN_EXEMPT_URLS = (
 	'/account/reset-password/confirm/NA/set-password/',
 	)
 
+ALLOW_VIEW_URLS = (
+    '/account/item/<pk>/',
+    '/account/search-item/',
+    )
+
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025

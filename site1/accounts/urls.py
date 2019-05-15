@@ -34,6 +34,6 @@ urlpatterns = [
 	path('notification/', NotifyView.as_view(), name='notify'),
 	url(r'^message/(?P<pk>\d+)/$', friend_message.as_view(), name='friend_message'),
 	path('submit-item/', views.submit_item, name='submit_item'),
-	url(r'^item/(?P<pk>\d+)/$', views.view_item, name='view_item'),
+	path('item/<pk>/', views.view_item, name='view_item'),
 	path('search-item/', views.search_item, name='search_item'),
 ]
