@@ -48,10 +48,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'site1.middleware.LoginRequiredMiddleware',
+	'osakitenka.middleware.LoginRequiredMiddleware',
 ]
 
-ROOT_URLCONF = 'site1.urls'
+ROOT_URLCONF = 'osakitenka.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'site1.wsgi.application'
+WSGI_APPLICATION = 'osakitenka.wsgi.application'
 
 
 # Database
@@ -123,7 +123,7 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (
-    os.path.join(BASE_DIR, 'site1/media')
+    os.path.join(BASE_DIR, 'osakitenka/media')
 )
 
 LOGIN_REDIRECT_URL = '/home/'

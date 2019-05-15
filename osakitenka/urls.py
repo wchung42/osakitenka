@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from site1 import views as site1_views
+from osakitenka import views as osakitenka_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import (
@@ -24,7 +24,7 @@ from django.contrib.auth.views import (
 	)
 
 urlpatterns = [
-    path('', site1_views.login_redirect, name='login_redirect'),
+    path('', osakitenka_views.login_redirect, name='login_redirect'),
     path('admin/', admin.site.urls),
     path('account/', include('accounts.urls')),
 	path('home/', include('home.urls')),
