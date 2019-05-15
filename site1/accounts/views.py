@@ -54,7 +54,6 @@ def edit_profile(request):
 			}
 		return render(request, 'accounts/edit_profile.html', args)
 
-
 def change_password(request):
 	if request.method == 'POST':
 		form = PasswordChangeForm(data=request.POST, user=request.user)
@@ -126,6 +125,35 @@ def submit_item(request):
 		}
 		return render(request, 'accounts/submit_item.html', args)
 
+def view_item(request, pk=None):
+	if pk:
+		item = Products.objects.get(pk=pk)
+		item.num_viewed += 1
+		item.save()
+		img = ProductsImage.objects.filter(product=item)
+	else:
+		return redirect('home')
+	args = {
+		'item': item,
+		'img': img,
+		}
+	return render(request, 'accounts/view_item.html', args)
+
+def search_item(request):
+		item = Products.objects.all()
+		img = ProductsImage.objects.all()
+		if request.method == 'POST':
+			text = request.POST.get('textfield', None)
+			try:
+				item = item.filter(title__icontains= text).order_by('-num_purchased', '-num_viewed')
+			except:
+				return redirect('search_item')
+		args = {
+			'item': item,
+			'img': img,
+			}
+		return render(request, 'accounts/search_item.html', args)
+
 class friend_message(TemplateView):
 	template_name = 'accounts/message.html'
 
@@ -137,7 +165,7 @@ class friend_message(TemplateView):
 			mes0 = mes.filter(current_user=request.user, friend_user=friend_user)
 			mes1 = mes.filter(current_user=friend_user, friend_user=request.user)
 			mes2 = mes0 | mes1
-			mes3 = mes2.all().order_by('-created_date', '-updated_date')
+			mes = mes2.all().order_by('-created_date', '-updated_date')
 		else:
 			return redirect('home')
 		args = {

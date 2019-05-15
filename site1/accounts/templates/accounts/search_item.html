@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Search Items</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<h1>Search Item</h1>
+	{% if user.is_authenticated %}
+		<form method="post">
+		{% csrf_token%}
+		<input type="text" name="textfield">
+		<br>
+		<button type="submit">Search</button>
+		</form>
+	{% endif %}
+	<h2>Items</h2>
+		{% for itm in item %}
+			{% for itmimg in img %}
+			{% if itmimg.product == itm %}
+				<a href="{% url 'view_item' pk=itm.id %}">
+					<div><img src="{{ itmimg.image.url }}" width="200"></div>
+				</a>
+			{% endif %}
+			{% endfor %}
+			<p>Title: {{ itm.title }} </p>
+			<p>Description: {{ itm.description }}</p>
+			<p>Price: ${{ itm.price }}</p>
+		{% endfor %}
+</div>
+{% endblock %}
