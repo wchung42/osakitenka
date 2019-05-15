@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.validators import MinValueValidator
 import decimal
+from datetime import datetime
+from django.urls import reverse
+
 
 CATEGORY_CHOICES = (
 	('GEN', 'General'),
@@ -23,6 +26,7 @@ class Product(models.Model):
 	num_purchased = models.IntegerField(default=0)
 	num_viewed = models.IntegerField(default=0)
 	category = models.CharField(choices = CATEGORY_CHOICES, max_length = 4, default = 'GEN')
+
 
 class ProductsImage(models.Model):
 	product = models.ForeignKey(Product, related_name='product', on_delete=models.CASCADE)
@@ -45,3 +49,19 @@ class Order(models.Model):
 
 	def __str__(self):
 		return self.title
+
+# comments
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=255)
+    parentProduct = models.ForeignKey(Product, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=datetime.now, blank=True)
+ 
+    def __str__(self):
+        return '{}-{}'.format(self.product.title, str(self.user.username))
+ 
+    def delete_comment(self):
+        self.delete()
+ 
+    def save_comment(self):
+        self.save()

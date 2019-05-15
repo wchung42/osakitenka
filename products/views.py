@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
-from .forms import fProducts, fProductsImage
-from products.models import Product, ProductsImage
+from .forms import fProducts, fProductsImage, fComment
+from products.models import Product, ProductsImage, Comment
 
 
 def submit_item(request):
@@ -31,16 +32,32 @@ def submit_item(request):
 		return render(request, 'products/submit_item.html', args)
 
 def view_item(request, pk=None):
+	this_item = Product.objects.get(pk = pk)
 	if pk:
 		item = Product.objects.get(pk=pk)
+		comments = Comment.objects.filter(parentProduct = item).order_by('-pk')
 		item.num_viewed += 1
 		item.save()
 		img = ProductsImage.objects.filter(product=item)
 	else:
 		return redirect('home')
+
+	if request.method == 'POST':
+		comment_form = fComment(request.POST or None)
+		if comment_form.is_valid():
+			comment = request.POST.get('comment')
+			comments = comments.create(parentProduct = item, user = request.user, comment = comment)
+			comments.save()
+			return HttpResponseRedirect(request.path_info)
+ 
+	else:
+		comment_form = fComment()
+
 	args = {
 		'item': item,
 		'img': img,
+		'comments': comments,
+		'fComment': fComment,
 		}
 	return render(request, 'products/view_item.html', args)
 

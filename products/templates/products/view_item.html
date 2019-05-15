@@ -20,4 +20,30 @@
 	<br>
 	<h2>Comments and Ratings</h2>
 </div>
+
+<br><br>
+<hr>
+<h2>{{ comments.count }} Comment{{ comments|pluralize }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ fComment }}
+    <br>
+    {% if user.is_authenticated %}
+        <input type="submit" value="Post comment" class="btn btn-outline-success">
+    {% else %}
+        <input type="submit" value="Post comment" class="btn btn-outline-success" disabled>
+    {% endif %}
+</form>
+ 
+<div class="main-comment-section">
+    <br>
+    {% for comment in comments %}
+    <blockquote class="blockquote">
+        <p class="mb-0">{{ comment.comment }}</p>
+ 
+        <footer class="blockquote-footer">by <cite title="Source Title">{{ comment.user|capfirst}} on {{ comment.timestamp }}</cite></footer>
+    </blockquote>
+    <br>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from products.models import Product, ProductsImage
+from products.models import Product, ProductsImage, Comment
 
 from home.models import Post
 
@@ -41,3 +41,15 @@ class fProductsImage(forms.ModelForm):
 				yea.save()
 
 			return yea
+
+class fComment(forms.ModelForm):
+    comment = forms.CharField(label ='', widget = forms.Textarea(attrs= {
+        'class': 'form-control',
+        'placeholder': 'Write a comment...',
+        'row':'',
+        'col':'',
+        'style': 'height : 2.5em;'
+        }))
+    class Meta:
+        model = Comment
+        fields = ('comment',)

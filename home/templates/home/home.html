@@ -12,9 +12,14 @@
 			<a href= "{% url 'search_item' %}">
 				<h3>Click Here To Search For Item</h3>
 			</a>
-			<a href= "{% url 'item-list' %}">
-				<h3>Click Here To See All Items</h3>
-			</a>
+			<style> ul#categories li { display:inline; } </style>
+			<ul id="categories">
+				<li> <a href = "{% url 'item-list' %}"> All Items </a></li>
+				<li > General </li>
+				<li > Food </li>
+				<li > Electronics </li>
+				<li > Misc </li>
+			</ul>
 			<h1>Popular Items</h1>
 			{% for itm in items %}
 				{% for itmimg in itemimg %}
