@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from accounts.models import UserProfile, UserProfiles, Messages, Products, ProductsImage
+from accounts.models import UserProfile, UserProfiles, Messages
 
 from home.models import Post
 
@@ -83,38 +83,38 @@ class SendMessage(forms.ModelForm):
 			
 		)
 
-class fProducts(forms.ModelForm):
-	class Meta:
-		model = Products
-		fields = (
-			'title',
-			'description',
-			'keywords',
-			'price',
-		)
-		def save(self, commit=True):
-			item = super(fProducts, self).save(commit=False)
-			item.title = self.cleaned_data['title']
-			item.description = self.cleaned_data['description']
-			item.keywords = self.cleaned_data['keywords']
-			item.price = self.cleaned_data['price']
+# class fProducts(forms.ModelForm):
+# 	class Meta:
+# 		model = Products
+# 		fields = (
+# 			'title',
+# 			'description',
+# 			'keywords',
+# 			'price',
+# 		)
+# 		def save(self, commit=True):
+# 			item = super(fProducts, self).save(commit=False)
+# 			item.title = self.cleaned_data['title']
+# 			item.description = self.cleaned_data['description']
+# 			item.keywords = self.cleaned_data['keywords']
+# 			item.price = self.cleaned_data['price']
 
-			if commit:
-				item.save()
+# 			if commit:
+# 				item.save()
 
-			return item
+# 			return item
 
-class fProductsImage(forms.ModelForm):
-	class Meta:
-		model = ProductsImage
-		fields = (
-			'image',
-		)
-		def save(self, commit=True):
-			yea = super(fProductsImage, self).save(commit=False)
-			yea.image = self.cleaned_data['image']
+# class fProductsImage(forms.ModelForm):
+# 	class Meta:
+# 		model = ProductsImage
+# 		fields = (
+# 			'image',
+# 		)
+# 		def save(self, commit=True):
+# 			yea = super(fProductsImage, self).save(commit=False)
+# 			yea.image = self.cleaned_data['image']
 
-			if commit:
-				yea.save()
+# 			if commit:
+# 				yea.save()
 
-			return yea
+# 			return yea

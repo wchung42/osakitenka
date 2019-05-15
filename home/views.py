@@ -2,7 +2,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from accounts.models import Audio, Products, ProductsImage
+from accounts.models import Audio
+from products.models import Product, ProductsImage
 from home.forms import HomeForm
 from home.models import Post, Friend, Friend_Request
 
@@ -13,8 +14,8 @@ class HomeView(TemplateView):
 		form = HomeForm()
 		posts = Post.objects.all().order_by('-created_date', '-updated_date')
 		audio = Audio.objects.get(pk=3)
-		items = Products.objects.all().order_by('-num_purchased', '-num_viewed')[:5]
-		newitems = Products.objects.all().order_by('-created_date', '-updated_date')[:5]
+		items = Product.objects.all().order_by('-num_purchased', '-num_viewed')[:5]
+		newitems = Product.objects.all().order_by('-created_date', '-updated_date')[:5]
 		itemimg = ProductsImage.objects.all()
 		args = {
 			'form': form, 
