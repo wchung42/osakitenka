@@ -5,6 +5,9 @@ from django.views.generic import TemplateView
 from .forms import fProducts, fProductsImage, fComment
 from products.models import Product, ProductsImage, Comment
 
+from django.conf import settings
+import stripe
+
 
 def submit_item(request):
 	if request.method == 'POST':
@@ -53,6 +56,11 @@ def view_item(request, pk=None):
 	else:
 		comment_form = fComment()
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['key'] = settings.STRIPE_PUBLISHABLE_KEY
+		return context
+
 	args = {
 		'item': item,
 		'img': img,
@@ -81,3 +89,14 @@ def item_list(request):
 		'items': Product.objects.all()
 	}
 	return render(request, 'products/item_list.html', context)
+
+def charge(request):
+	if request.method == 'POST':
+		stripe.api_key = 'sk_test_S00BneclIcn1x8yb9629kfi700vVtyDOhA'
+		charge = stripe.Charge.create(
+			amount = 500,
+			currency = 'usd',
+			description = 'Purchased item',
+			source=request.POST['stripeToken']
+		)
+		return render(request, 'products/charge.html')

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    #'payments.app.PaymentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,7 @@ LOGIN_EXEMPT_URLS = (
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+STRIPE_SECRET_KEY = 'sk_test_S00BneclIcn1x8yb9629kfi700vVtyDOhA'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_nugNwNye8GtFwh7pZxGLDGvU00bqcU01rB'
+
