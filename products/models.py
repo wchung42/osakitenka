@@ -1,7 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.core.validators import MinValueValidator
+import decimal
 
+CATEGORY_CHOICES = (
+	('GEN', 'General'),
+	('FOO', 'Food'),
+	('ELE', 'Electronics'),
+	('MISC', 'Misc')
+)
 
 # Create your models here.
 class Product(models.Model):
@@ -9,11 +17,12 @@ class Product(models.Model):
 	title = models.CharField(max_length=500)
 	description = models.CharField(max_length=500, blank=True)
 	keywords = models.CharField(max_length=500)
-	price = models.DecimalField(max_digits=20, decimal_places=2)
+	price = models.DecimalField(max_digits=20, decimal_places=2, validators = [MinValueValidator(decimal.Decimal('0.01'))])
 	created_date = models.DateTimeField(auto_now_add=True)
 	updated_date = models.DateTimeField(auto_now=True)
 	num_purchased = models.IntegerField(default=0)
 	num_viewed = models.IntegerField(default=0)
+	category = models.CharField(choices = CATEGORY_CHOICES, max_length = 4, default = 'GEN')
 
 class ProductsImage(models.Model):
 	product = models.ForeignKey(Product, related_name='product', on_delete=models.CASCADE)

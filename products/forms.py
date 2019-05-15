@@ -12,6 +12,7 @@ class fProducts(forms.ModelForm):
 			'description',
 			'keywords',
 			'price',
+			'category',
 		)
 		def save(self, commit=True):
 			item = super(fProducts, self).save(commit=False)
@@ -19,6 +20,7 @@ class fProducts(forms.ModelForm):
 			item.description = self.cleaned_data['description']
 			item.keywords = self.cleaned_data['keywords']
 			item.price = self.cleaned_data['price']
+			item.category = self.clean_data['category']
 
 			if commit:
 				item.save()
