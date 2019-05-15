@@ -8,9 +8,12 @@
 	</audio>
 <div class="container">
 	<div class="col-md-8">
-		<h1>Homepage</h1>
+		<h1>Welcome to OsakiTenka!</h1>
 			<a href= "{% url 'search_item' %}">
-				<h1>Click Here To Search For Item</h1>
+				<h3>Click Here To Search For Item</h3>
+			</a>
+			<a href= "{% url 'item-list' %}">
+				<h3>Click Here To See All Items</h3>
 			</a>
 			<h1>Popular Items</h1>
 			{% for itm in items %}
