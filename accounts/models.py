@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from home.models import Friend
 
+from products.models import Product
+
 # Create your models here.
 class UserProfiles(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -11,7 +13,11 @@ class UserProfiles(models.Model):
 	credit_card_number = models.CharField(max_length=100, blank=True)
 	phone_number = models.CharField(max_length=100, blank=True)
 	image = models.ImageField(upload_to='profile_image', blank=True)
+	items = models.ManyToManyField(Product, blank = True)
 
+	def __str__(self):
+		return self.user.username
+		
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

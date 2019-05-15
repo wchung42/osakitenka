@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
 from .forms import fProducts, fProductsImage
@@ -45,16 +46,34 @@ def view_item(request, pk=None):
 	return render(request, 'products/view_item.html', args)
 
 def search_item(request):
-		item = Product.objects.all()
-		img = ProductsImage.objects.all()
-		if request.method == 'POST':
-			text = request.POST.get('textfield', None)
-			try:
-				item = item.filter(title__icontains= text).order_by('-num_purchased', '-num_viewed')
-			except:
-				return redirect('search_item')
-		args = {
-			'item': item,
-			'img': img,
-			}
-		return render(request, 'products/search_item.html', args)
+	item = Product.objects.all()
+	img = ProductsImage.objects.all()
+	if request.method == 'POST':
+		text = request.POST.get('textfield', None)
+		try:
+			item = item.filter(title__icontains= text).order_by('-num_purchased', '-num_viewed')
+		except:
+			return redirect('search_item')
+	args = {
+		'item': item,
+		'img': img,
+		}
+	return render(request, 'products/search_item.html', args)
+
+# new --- show products
+@login_required
+def product_list(request):
+	object_list = Product.objects.add()
+	filtered_orders = Order.objects.filter(owner = request.user.profile, is_ordered = False)
+	current_order_prodcuts = []
+	if filtered_orders.exists():
+		user_order = filtered_orders[0]
+		user_order_items = user_order.items.all()
+		current_order_products = [product.product for product in user_order_items]
+
+	context = {
+		'object_list': object_list,
+		'current_order_products': current_order_products
+	}
+
+	return render(request, 'products/product_list.html', context)

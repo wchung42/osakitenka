@@ -9,6 +9,9 @@ from accounts.forms import RegistrationForm, EditProfileForm, ProfileForm, Searc
 from accounts.models import UserProfile, UserProfiles, Messages
 from home.models import Friend, Friend_Request
 
+# new --- shopping cart
+from cart.models import Order
+
 # Create your views here.
 def register(request):
 	if request.method == 'POST':
@@ -27,13 +30,18 @@ def view_profile(request, pk=None):
 	if pk:
 		user = User.objects.get(pk=pk)
 		profile = UserProfiles.objects.get(user_id=pk)
+
+		# new ---- show orders
+		orders = Order.objects.filter(is_ordered = True, owner = user)
+
 	else:
 		user = request.user
 		profile = UserProfiles.objects.get(user=request.user)
 	args = {
 		'user': user,
 		'profile': profile,
-		}
+		'orders': orders
+	}
 	return render(request, 'accounts/profile.html', args)
 	
 

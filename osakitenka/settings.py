@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'accounts',
 	'home',
     'products',
+    'cart',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -143,3 +144,7 @@ LOGIN_EXEMPT_URLS = (
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+# added stripe keys
+STRIPE_SECRET_KEY = 'sk_test_S00BneclIcn1x8yb9629kfi700vVtyDOhA'
+STRIP_PUBLISHABLE_KEY = 'pk_test_nugNwNye8GtFwh7pZxGLDGvU00bqcU01rB'
