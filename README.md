@@ -10,6 +10,6 @@ Please install the following: (use command pip install)
 To run the website, go to the directly (osakitenka) and use python manage.py runserver
 
 Acess to super user in django is 
-username: admin
-password: adminadmin
+1. username: admin
+2. password: adminadmin
 
